@@ -5,13 +5,13 @@ public function salvar($nome,$data,$senha,$telefone,$sobrenome,$email){
 
     $arquivo = fopen('meuarquivo.txt','w');
     if ($arquivo == false) die('Não foi possível criar o arquivo.');
-    $escreve = fwrite($arquivo, $nome);
-    $escreve = fwrite($arquivo, $data);
-    $escreve = fwrite($arquivo, $senha);
-    $escreve = fwrite($arquivo, $telefone);
-    $escreve = fwrite($arquivo, $sobrenome);
-    $escreve = fwrite($arquivo, $email);
-    fclose($arquivo);
+     fwrite($arquivo, $nome.',');
+     fwrite($arquivo, $data.',');
+     fwrite($arquivo, $senha.',');
+     fwrite($arquivo, $telefone.',');
+     fwrite($arquivo, $sobrenome.',');
+     fwrite($arquivo, $email);
+     fclose($arquivo);
 }
 
 }
