@@ -16,7 +16,7 @@
     <br>
     <input name="email" type="email" placeholder="Email"/>
     <br>
-    <input type="submit" value="Enviar"/>
+    <input type="submit" value="Cadastrar"/>
 
 </form>
 </body>
