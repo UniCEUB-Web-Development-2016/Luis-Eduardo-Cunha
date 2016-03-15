@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" hash="3875439758">
+    <data-source source="LOCAL" name="PostgreSQL - bd_redeSocial@localhost" uuid="7bc5b508-3a07-4413-af63-ec0da7ac962b">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/bd_redeSocial</jdbc-url>
+    </data-source>
+  </component>
+</project>
