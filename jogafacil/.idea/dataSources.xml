@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="DataSourceManagerImpl" format="xml" hash="3875439758">
+  <component name="DataSourceManagerImpl" format="xml" hash="2630071112">
     <data-source source="LOCAL" name="PostgreSQL - bd_redeSocial@localhost" uuid="7bc5b508-3a07-4413-af63-ec0da7ac962b">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
