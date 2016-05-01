@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <form action="control/controlManager.php" method="post">
+    <form action="control/UsuarioController.php" method="post">
 
         <input type="text" name="nome" placeholder="Nome" required>
         <input type="text" name="sobrenome" placeholder="Sobrenome" required>

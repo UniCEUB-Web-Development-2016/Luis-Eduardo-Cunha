@@ -1,18 +1,51 @@
 <?php
 
-include "../util/conexao.php";
+include "RequestController.php";
+include "ResourceController.php";
 
-$gravandoUsuario;
+class ControlManager
+{
+    private $resourceController;
+    private $requestController;
 
-$gravar = new Conexao();
-$a = $gravar->abrirConexao();
+    public function __construct()
+    {
+        $this->resourceController = new ResourceController();
 
-$b=$gravar->getConectar();
+        $this->requestController = new RequestController();
+    }
 
-var_dump($b);
+    public function getResource()
+    {
+        $request = $this->requestController-> createRequest(
+            $_SERVER["SERVER_PROTOCOL"],
+            $_SERVER["REQUEST_METHOD"],
+            $_SERVER["REQUEST_URI"],
+            $_SERVER["SERVER_ADDR"]);
 
-//$gravandoUsuario = "INSERT INTO 'tb_usuario' (nome_usuario,sobrenome_usuario, email_usuario,senha)
-//VALUES ('".$_POST["nome"]."', '".$POST["sobrenome"]."', '".$POST["email"]."','".$POST["senha"]."')";
-//$gravar->gravar($gravandoUsuario);
-//$gravar->fecharConexao();
+        return $this->route_method($request);
+    }
 
+    public function route_method($request)
+    {
+        switch($request->get_method())
+        {
+            case "GET":
+                break;
+
+            case "POST":
+                return $this->resourceController->createResource($request);
+                break;
+
+            case "PUT":
+                break;
+
+            case "DELETE":
+                break;
+
+            default:
+
+
+        }
+    }
+}
