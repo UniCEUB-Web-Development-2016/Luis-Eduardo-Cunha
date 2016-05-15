@@ -30,4 +30,23 @@ class UsuarioController
             $usuario->getSenha()."')";
         return $query;
     }
+
+    public function search($request,$cnn){
+        return (new queryGenerator())->search($request,$cnn);
+    }
+    private function validateParameters($parameters){
+        foreach ($this->requiredParameters as $key) {
+            if(!$this->isIn($key,$parameters)){
+                throw new Exception("Error! Parameter '$key' is missing in your request!", 1);
+            }
+        }
+    }
+    private function isIn($prm,$array){
+        foreach ($array as $key2 => $value) {
+            if ($key2 == $prm){
+                return true;
+            }
+        }
+        return false;
+    }
 }
