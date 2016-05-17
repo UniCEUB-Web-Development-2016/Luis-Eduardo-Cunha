@@ -7,10 +7,11 @@
         private $email;
 
         public function _construct($nme_usuario, $sobrenome,$email, $senha){
-            $this->nme_usuario = $nme_usuario;
-            $this->sobrenome = $sobrenome;
-            $this->email = $email;
-            $this->senha = $senha;
+
+            $this->setNmeUsuario($nme_usuario);
+            $this->setSobrenome($sobrenome);
+            $this->setEmail($email);
+            $this->setSenha($senha);
         }
         public function getNmeUsuario(){
         return $this->nme_usuario;
