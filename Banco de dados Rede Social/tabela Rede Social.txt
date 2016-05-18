@@ -1,0 +1,35 @@
+BD: RedeSocial
+
+CREATE  TABLE IF NOT EXISTS `redesocial`.`tb_usuario` (
+  `idt_usuario` INT NOT NULL AUTO_INCREMENT ,
+  `nome` VARCHAR(45) NOT NULL ,
+  `sobrenome` VARCHAR(45) NOT NULL ,
+  `email` VARCHAR(45) NOT NULL ,
+  `senha` VARCHAR(45) NOT NULL ,
+  PRIMARY KEY (`idt_usuario`) )
+ENGINE = InnoDB;
+
+USE `redesocial` ;
+
+CREATE  TABLE IF NOT EXISTS `redesocial`.`tb_partida` 
+(
+
+  `idt_partida` INT NOT NULL AUTO_INCREMENT ,
+
+
+  `nome_partida` VARCHAR(45) NOT NULL ,
+
+  
+`cep` VARCHAR(9) NOT NULL ,
+
+  
+`horario` TIME NOT NULL ,
+
+ 
+ `data` DATE NOT NULL ,
+
+  
+PRIMARY KEY (`idt_partida`) )
+
+
+ENGINE = InnoDB;
