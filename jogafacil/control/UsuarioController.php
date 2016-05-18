@@ -5,7 +5,7 @@ include_once "model/Usuario.php";
 include_once "database/DatabaseConnector.php";
 class UsuarioController
 {
-        private $requiredParameters = array('nome','sobrenome','email','senha');
+        private $requiredParameters = array('idt_usuario','nome','sobrenome','email','senha');
 
     public function register($request)
     {
@@ -61,7 +61,7 @@ class UsuarioController
     public function update($request)
     {
         $params = $request->get_params();
-        if(!empty($params["id"]) && !empty($params["nome"]) && !empty($params["sobrenome"]) && !empty($params["email"]) && !empty($params["senha"])) {
+        if(!empty($params["idt_usuario"]) && !empty($params["nome"]) && !empty($params["sobrenome"]) && !empty($params["email"]) && !empty($params["senha"])) {
 
             $name = addslashes(trim($params["nome"]));
             $sobrenome = addslashes(trim($params["sobrenome"]));
@@ -90,9 +90,9 @@ class UsuarioController
     public function delete($request)
     {
         $params = $request->get_params();
-        if (!empty($params["id"])){
+        if (!empty($params["idt_usuario"])){
 
-            $id = addslashes(trim($params["id"]));
+            $id = addslashes(trim($params["idt_partida"]));
 
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
