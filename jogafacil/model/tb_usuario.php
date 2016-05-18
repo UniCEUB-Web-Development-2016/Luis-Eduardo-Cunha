@@ -6,7 +6,7 @@ class Usuario{
     var $email;
     var $senha;
 
-    public function _construct($nome, $sobrenome, $email, $senha){
+    public function __construct($nome, $sobrenome, $email, $senha){
 
         self::setNome($nome);
         self::setSobrenome($sobrenome);
