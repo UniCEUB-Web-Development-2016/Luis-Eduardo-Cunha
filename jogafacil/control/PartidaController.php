@@ -3,7 +3,7 @@
 include_once "model/Request.php";
 include_once "model/tb_partida.php";
 include_once "database/DatabaseConnector.php";
-class UsuarioController
+class PartidaController
 {
     private $requiredParameters = array('nome_partida','cep','horario','data');
 
@@ -19,15 +19,15 @@ class UsuarioController
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-
-
-            return $conn->query($this->generateInsertQuery($partida));
+            var_dump($partida);
+             return $conn->query($this->generateInsertQuery($partida));
         } else {
             echo "Error 400: Bad Request";
         }
     }
     private function generateInsertQuery($partida)
     {
+
         $query =  "INSERT INTO tb_partida (nome_partida, cep, horario, data) VALUES ('".
             $partida->getNomePartida()."','".
             $partida->getCep()."','".
@@ -99,9 +99,10 @@ class UsuarioController
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-            $result = $conn->prepare("DELETE FROM tb_partida WHERE id = ?");
+            $result = $conn->prepare("DELETE FROM tb_partida WHERE id=?");
             $result->bindValue(1, $id);
             $result->execute();
+
             if ($result->rowCount() > 0){
                 echo "UsuÃ¡rio deletado com sucesso!";
             } else {

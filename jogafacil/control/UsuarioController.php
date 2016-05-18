@@ -5,13 +5,14 @@ include_once "model/tb_usuario.php";
 include_once "database/DatabaseConnector.php";
 class UsuarioController
 {
-        private $requiredParameters = array('nme_usuario','sobrenome','email','senha');
+        private $requiredParameters = array('nome','sobrenome','email','senha');
 
     public function register($request)
     {
+
         $params = $request->get_params();
         if ($this->isValid($params)) {
-        $usuario = new tbUsuario($params["nme_usuario"],
+            $usuario = new Usuario($params["nome"],
             $params["sobrenome"],
             $params["email"],
             $params["senha"]);
@@ -19,7 +20,7 @@ class UsuarioController
         //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
         $conn = $db->getConnection();
-
+            var_dump($usuario);
 
         return $conn->query($this->generateInsertQuery($usuario));
         } else {
@@ -28,11 +29,12 @@ class UsuarioController
     }
     private function generateInsertQuery($usuario)
     {
-        $query =  "INSERT INTO tb_usuario (nome_usuario, sobrenome_usuario, email_usuario, senha) VALUES ('".
-            $usuario->getNmeUsuario()."','".
+            $query =  "INSERT INTO tb_usuario (nome_usuario, sobrenome_usuario, email_usuario, senha) VALUES ('".
+            $usuario->getNome()."','".
             $usuario->getSobrenome()."','".
             $usuario->getEmail()."','".
             $usuario->getSenha()."')";
+
             return $query;
     }
 
@@ -109,9 +111,6 @@ class UsuarioController
             }
         }
     }
-
-
-
 
     private function isValid($parameters)
     {

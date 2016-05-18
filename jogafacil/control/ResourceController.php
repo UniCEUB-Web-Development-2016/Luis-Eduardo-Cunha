@@ -2,6 +2,7 @@
 
 include_once "model/Request.php";
 include_once "control/UsuarioController.php";
+include_once "control/PartidaController.php";
 
 class ResourceController
 {

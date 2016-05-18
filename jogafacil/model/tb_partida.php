@@ -24,7 +24,7 @@
         public function setCep($cep){
             $this->cep=$cep;
         }
-        public function getHoario(){
+        public function getHorario(){
             return $this->horario;
         }
         public function setHorario($horario){
