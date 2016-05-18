@@ -5,6 +5,6 @@ class RequestRouter
 {
     public function route()
     {
-        return json_encode((new ControlManager) -> getResource());
+        return (new ControlManager) -> getResource();
     }
 }

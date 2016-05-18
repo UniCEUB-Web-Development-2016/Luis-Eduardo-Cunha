@@ -5,7 +5,7 @@ include_once "model/tb_partida.php";
 include_once "database/DatabaseConnector.php";
 class PartidaController
 {
-    private $requiredParameters = array('nome_partida','cep','horario','data');
+    private $requiredParameters = array('idt_partida','nome_partida','cep','horario','data');
 
     public function register($request)
     {
@@ -19,7 +19,6 @@ class PartidaController
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-
              return $conn->query($this->generateInsertQuery($partida));
         } else {
             echo "Error 400: Bad Request";
@@ -33,7 +32,6 @@ class PartidaController
             $partida->getCep()."','".
             $partida->getHorario()."','".
             $partida->getData()."')";
-
         return $query;
     }
 
@@ -44,7 +42,7 @@ class PartidaController
         //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
         $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
         $conn = $db->getConnection();
-        $result = $conn->query("SELECT nome_partida, cep, horario, data FROM tb_usuario WHERE ".$crit);
+        $result = $conn->query("SELECT nome_partida, cep, horario, data FROM tb_partida WHERE ".$crit);
 
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -63,19 +61,20 @@ class PartidaController
 
     public function update($request)
     {
-        if(!empty($_GET["id"]) && !empty($_GET["nome_partida"]) && !empty($_GET["cep"]) && !empty($_GET["horario"]) && !empty($_GET["data"])) {
+        $params = $request->get_params();
+        if(!empty($params["idt_partida"]) && !empty($params["nome_partida"]) && !empty($params["cep"]) && !empty($params["horario"]) && !empty($params["data"])) {
 
-            $name = addslashes(trim($_GET["nome_partida"]));
-            $cep = addslashes(trim($_GET["cep"]));
-            $horario= addslashes(trim($_GET["horario"]));
-            $data = addslashes(trim($_GET["data"]));
-            $id = addslashes(trim($_GET["id"]));
+            $name = addslashes(trim($params["nome_partida"]));
+            $cep = addslashes(trim($params["cep"]));
+            $horario= addslashes(trim($params["horario"]));
+            $data = addslashes(trim($params["data"]));
+            $id = addslashes(trim($params["idt_partida"]));
 
-            $params = $request->get_params();
+
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-            $result = $conn->prepare("UPDATE tb_partida SET nome_partida=:nome_partida, cep=:cep, horario=:horario, data=:data WHERE id=:id");
+            $result = $conn->prepare("UPDATE tb_partida SET nome_partida=:nome_partida, cep=:cep, horario=:horario, data=:data WHERE idt_partida=:id");
             $result->bindValue(":nome_partida", $name);
             $result->bindValue(":cep", $cep);
             $result->bindValue(":horario", $horario);
@@ -83,31 +82,31 @@ class PartidaController
             $result->bindValue(":id", $id);
             $result->execute();
             if ($result->rowCount() > 0){
-                echo "UsuÃ¡rio alterado com sucesso!";
+                echo "Partida alterado com sucesso!";
             } else {
-                echo "UsuÃ¡rio nÃ£o atualizado";
+                echo "Partida nÃ£o atualizado";
             }
         }
     }
 
     public function delete($request)
     {
-        if (!empty($_GET["id"])){
+        $params = $request->get_params();
+        if (!empty($params["idt_partida"])){
 
-            $id = addslashes(trim($_GET["id"]));
+            $id = addslashes(trim($params["idt_partida"]));
 
-            $params = $request->get_params();
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-            $result = $conn->prepare("DELETE FROM tb_partida WHERE id=?");
+            $result = $conn->prepare("DELETE FROM tb_partida WHERE idt_partida=?");
             $result->bindValue(1, $id);
             $result->execute();
 
             if ($result->rowCount() > 0){
-                echo "UsuÃ¡rio deletado com sucesso!";
+                echo "Partida deletada com Sucesso!";
             } else {
-                echo "UsuÃ¡rio nÃ£o deletado";
+                echo "Partida não deletada!";
             }
         }
     }

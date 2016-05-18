@@ -1,7 +1,7 @@
 <?php
 
 include_once "model/Request.php";
-include_once "model/tb_usuario.php";
+include_once "model/Usuario.php";
 include_once "database/DatabaseConnector.php";
 class UsuarioController
 {
@@ -9,7 +9,6 @@ class UsuarioController
 
     public function register($request)
     {
-
         $params = $request->get_params();
         if ($this->isValid($params)) {
             $usuario = new Usuario($params["nome"],
@@ -17,13 +16,9 @@ class UsuarioController
             $params["email"],
             $params["senha"]);
 
-        //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
-            $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
-        $conn = $db->getConnection();
-            var_dump($params);
-            var_dump($usuario);
-
-        return $conn->query($this->generateInsertQuery($usuario));
+            $db = new DatabaseConnector("localhost", "redesocial", "mysql", "", "root", "");
+            $conn = $db->getConnection();
+            return $conn->query($this->generateInsertQuery($usuario));
         } else {
             echo "Error 400: Bad Request";
         }
@@ -35,7 +30,7 @@ class UsuarioController
             $usuario->getSobrenome()."','".
             $usuario->getEmail()."','".
             $usuario->getSenha()."')";
-            var_dump($query);
+
             return $query;
     }
 
@@ -46,7 +41,7 @@ class UsuarioController
         //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
         $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
         $conn = $db->getConnection();
-        $result = $conn->query("SELECT nome_usuario, sobrenome, email, senha FROM tb_usuario WHERE ".$crit);
+        $result = $conn->query("SELECT nome, sobrenome, email, senha FROM tb_usuario WHERE ".$crit);
 
         return $result->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -65,25 +60,25 @@ class UsuarioController
 
     public function update($request)
     {
-        if(!empty($_GET["id"]) && !empty($_GET["nome"]) && !empty($_GET["sobrenome"]) && !empty($_GET["email"]) && !empty($_GET["senha"])) {
+        $params = $request->get_params();
+        if(!empty($params["id"]) && !empty($params["nome"]) && !empty($params["sobrenome"]) && !empty($params["email"]) && !empty($params["senha"])) {
 
-            $name = addslashes(trim($_GET["nome"]));
-            $sobrenome = addslashes(trim($_GET["sobrenome"]));
-            $email = addslashes(trim($_GET["email"]));
-            $senha = addslashes(trim($_GET["senha"]));
-            $id = addslashes(trim($_GET["id"]));
+            $name = addslashes(trim($params["nome"]));
+            $sobrenome = addslashes(trim($params["sobrenome"]));
+            $email = addslashes(trim($params["email"]));
+            $senha = addslashes(trim($params["senha"]));
+            $id = addslashes(trim($params["id"]));
 
-            $params = $request->get_params();
-            //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-            $result = $conn->prepare("UPDATE tb_usuario SET nome_usuario=:nome_usuario, sobrenome=:sobrenome_usuario, email=:email_usuario, senha=:senha WHERE id=:id");
-            $result->bindValue(":nome", $name);
-            $result->bindValue(":sobrenome", $sobrenome);
-            $result->bindValue(":email", $email);
+            $result = $conn->prepare("UPDATE tb_usuario SET nome=:nome_usuario, sobrenome=:sobrenome_usuario, email=:email_usuario, senha=:senha WHERE idt_usuario=:id");
+            $result->bindValue(":nome_usuario", $name);
+            $result->bindValue(":sobrenome_usuario", $sobrenome);
+            $result->bindValue(":email_usuario", $email);
             $result->bindValue(":senha", $senha);
             $result->bindValue(":id", $id);
             $result->execute();
+
             if ($result->rowCount() > 0){
                 echo "UsuÃ¡rio alterado com sucesso!";
             } else {
@@ -94,15 +89,15 @@ class UsuarioController
 
     public function delete($request)
     {
-        if (!empty($_GET["id"])){
+        $params = $request->get_params();
+        if (!empty($params["id"])){
 
-            $id = addslashes(trim($_GET["id"]));
+            $id = addslashes(trim($params["id"]));
 
-            $params = $request->get_params();
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-            $result = $conn->prepare("DELETE FROM tb_usuario WHERE id = ?");
+            $result = $conn->prepare("DELETE FROM tb_usuario WHERE idt_usuario = ?");
             $result->bindValue(1, $id);
             $result->execute();
             if ($result->rowCount() > 0){

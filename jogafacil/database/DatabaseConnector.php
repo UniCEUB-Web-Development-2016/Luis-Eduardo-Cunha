@@ -22,19 +22,17 @@ class DatabaseConnector
 
     public function getConnection()
     {
-        $stringPDO = $this->type.":host=".$this->ip.";dbname=".$this->dbname;
-
-        try{
-            $connection = new PDO($stringPDO,
+        $connString = $this->type . ':host=' . $this->ip . ';dbname=' . $this->dbname;
+        try {
+            $conn = new PDO($connString,
                 $this->user,
                 $this->password);
-
-        }catch(PDOException $e)
-        {
-            var_dump($e);
+            // set the PDO error mode to exception
+            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            return $conn;
+        } catch (PDOException $e) {
+            echo "Connection failed: " . $e->getMessage();
         }
-
-        return $connection;
     }
 
 
