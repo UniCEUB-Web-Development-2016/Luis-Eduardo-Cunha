@@ -19,7 +19,7 @@ class PartidaController
             //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
-            var_dump($partida);
+
              return $conn->query($this->generateInsertQuery($partida));
         } else {
             echo "Error 400: Bad Request";
@@ -33,6 +33,7 @@ class PartidaController
             $partida->getCep()."','".
             $partida->getHorario()."','".
             $partida->getData()."')";
+
         return $query;
     }
 

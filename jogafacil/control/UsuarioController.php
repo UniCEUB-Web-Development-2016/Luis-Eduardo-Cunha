@@ -20,6 +20,7 @@ class UsuarioController
         //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
         $conn = $db->getConnection();
+            var_dump($params);
             var_dump($usuario);
 
         return $conn->query($this->generateInsertQuery($usuario));
@@ -29,12 +30,12 @@ class UsuarioController
     }
     private function generateInsertQuery($usuario)
     {
-            $query =  "INSERT INTO tb_usuario (nome_usuario, sobrenome_usuario, email_usuario, senha) VALUES ('".
+            $query =  "INSERT INTO tb_usuario (nome, sobrenome, email, senha) VALUES ('".
             $usuario->getNome()."','".
             $usuario->getSobrenome()."','".
             $usuario->getEmail()."','".
             $usuario->getSenha()."')";
-
+            var_dump($query);
             return $query;
     }
 
@@ -64,9 +65,9 @@ class UsuarioController
 
     public function update($request)
     {
-        if(!empty($_GET["id"]) && !empty($_GET["nome_usuario"]) && !empty($_GET["sobrenome"]) && !empty($_GET["email"]) && !empty($_GET["senha"])) {
+        if(!empty($_GET["id"]) && !empty($_GET["nome"]) && !empty($_GET["sobrenome"]) && !empty($_GET["email"]) && !empty($_GET["senha"])) {
 
-            $name = addslashes(trim($_GET["nome_usuario"]));
+            $name = addslashes(trim($_GET["nome"]));
             $sobrenome = addslashes(trim($_GET["sobrenome"]));
             $email = addslashes(trim($_GET["email"]));
             $senha = addslashes(trim($_GET["senha"]));
@@ -77,9 +78,9 @@ class UsuarioController
             $db = new DatabaseConnector("localhost", "redeSocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
             $result = $conn->prepare("UPDATE tb_usuario SET nome_usuario=:nome_usuario, sobrenome=:sobrenome_usuario, email=:email_usuario, senha=:senha WHERE id=:id");
-            $result->bindValue(":nome_usuario", $name);
-            $result->bindValue(":sobrenome_usuario", $sobrenome);
-            $result->bindValue(":email_usuario", $email);
+            $result->bindValue(":nome", $name);
+            $result->bindValue(":sobrenome", $sobrenome);
+            $result->bindValue(":email", $email);
             $result->bindValue(":senha", $senha);
             $result->bindValue(":id", $id);
             $result->execute();
