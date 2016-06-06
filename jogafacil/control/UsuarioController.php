@@ -16,10 +16,13 @@ class UsuarioController
             $params["email"],
             $params["senha"]);
 
+            //$db = new DatabaseConnector("localhost", "bd_redeSocial", "pgsql", "5432", "postgres", "luiseduardo93");
             $db = new DatabaseConnector("localhost", "redesocial", "mysql", "", "root", "");
             $conn = $db->getConnection();
+
             return $conn->query($this->generateInsertQuery($usuario));
         } else {
+
             echo "Error 400: Bad Request";
         }
     }
